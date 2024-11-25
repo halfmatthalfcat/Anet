@@ -7,6 +7,14 @@ Uses:
 - [LanguageExt](https://github.com/louthy/language-ext) (Functional C# Utilities)
 - [ASP.NET](https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-8.0&tabs=visual-studio) (Minimal API)
 
+## Running
+
+```sh
+dotnet run
+```
+
+API available at http://localhost:5289
+
 ## Projects
 
 - /Anet.API: The ASP.NET API Server
