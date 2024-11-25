@@ -1,4 +1,4 @@
-# Akka.NET Expirementaiton
+# Akka.NET Experimentation
 
 Uses:
 
