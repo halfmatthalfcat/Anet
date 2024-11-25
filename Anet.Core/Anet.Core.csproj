@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Akka" Version="1.5.31" />
+    <PackageReference Include="Akka.DependencyInjection" Version="1.5.31" />
+    <PackageReference Include="Akka.Hosting" Version="1.5.31.1" />
+    <PackageReference Include="LanguageExt.Core" Version="4.4.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="System" />
+    <Using Include="LanguageExt" />
+    <Using Include="LanguageExt.Prelude" Static="True" />
+  </ItemGroup>
+
+</Project>
