@@ -39,8 +39,7 @@ public class LockingActor : FSM<State, IData>
             .Replying(new LockResponse(true, true, now));
 
         case (StatusRequest, UnlockedData(Option<DateTime> lastLockedAt)):
-          Sender.Tell(new StatusResponse(false, lastLockedAt), Self);
-          return Stay();
+          return Stay().Replying(new StatusResponse(false, lastLockedAt));
 
         default:
           return null;
