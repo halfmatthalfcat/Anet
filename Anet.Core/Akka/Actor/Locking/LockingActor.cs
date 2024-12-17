@@ -16,9 +16,17 @@ public class LockingActor : FSM<State, IData>
 {
   private const string LockTimerName = "LockTimer";
 
-  public sealed record LockRequest();
+  public sealed record LockRequest
+  {
+    public static LockRequest Instance { get; } = new();
+    private LockRequest() { }
+  }
   public sealed record LockResponse(bool DidLock, bool IsLocked, DateTime LockedAt);
-  public sealed record StatusRequest();
+  public sealed record StatusRequest
+  {
+    public static StatusRequest Instance { get; } = new();
+    private StatusRequest() { }
+  }
   public sealed record StatusResponse(bool IsLocked, Option<DateTime> LastLockedAt);
   private sealed record Unlock();
 

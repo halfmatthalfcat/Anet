@@ -10,4 +10,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Using Include="LanguageExt" />
+    <Using Include="LanguageExt.Prelude" Static="True" />
+    <Using Include="System" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Akka.Persistence.PostgreSql" Version="1.5.20" />
+    <PackageReference Include="Akka.Persistence.PostgreSql.Hosting" Version="1.5.20" />
+  </ItemGroup>
+
 </Project>
