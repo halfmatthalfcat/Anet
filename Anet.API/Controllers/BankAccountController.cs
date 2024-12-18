@@ -20,7 +20,7 @@ public class BankAccountController(
     bankAccountActor.ActorRef.Ask<StatusResponse>(
       StatusRequest.Instance
     ).Map(response => response.Response.Match<ActionResult>(
-      success => Ok(success.Balance),
+      success => Ok(GetSuccessMessage(success)),
       failure => BadRequest(failure)
     ));
 
@@ -31,7 +31,7 @@ public class BankAccountController(
     bankAccountActor.ActorRef.Ask<StatusResponse>(
       OpenAccount.Instance
     ).Map(response => response.Response.Match<ActionResult>(
-      success => Ok(success.Balance),
+      success => Ok(GetSuccessMessage(success)),
       failure => BadRequest(failure)
     ));
 
@@ -42,7 +42,7 @@ public class BankAccountController(
     bankAccountActor.ActorRef.Ask<StatusResponse>(
       new Deposit(amount)
     ).Map(response => response.Response.Match<ActionResult>(
-      success => Ok(success.Balance),
+      success => Ok(GetSuccessMessage(success)),
       failure => BadRequest(failure)
     ));
 
@@ -53,7 +53,7 @@ public class BankAccountController(
     bankAccountActor.ActorRef.Ask<StatusResponse>(
       new Withdraw(amount)
     ).Map(response => response.Response.Match<ActionResult>(
-      success => Ok(success.Balance),
+      success => Ok(GetSuccessMessage(success)),
       failure => BadRequest(failure)
     ));
 
@@ -67,4 +67,7 @@ public class BankAccountController(
       success => Ok(),
       failure => BadRequest(failure)
     ));
+
+  private static string GetSuccessMessage(AccountDetail detail) =>
+    $"Balance: {detail.Balance}, Message: {detail.Message}";
 }

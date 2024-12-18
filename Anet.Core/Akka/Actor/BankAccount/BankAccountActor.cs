@@ -28,11 +28,12 @@ public sealed class BankAccountActor : PersistentFSM<
       _ => Stay().Replying(StatusResponse.Failure("Account is not open")),
     });
 
-    When(OpenedState.Instance, (evt, state) => 
+    When(OpenedState.Instance, (evt, _) => 
     {
-      if (state.StateData is BankAccountData data && data.CheckLock())
+      return (evt.FsmEvent, evt.StateData) switch
       {
-        return GoTo(LockedState.Instance)
+        (_, BankAccountData { IsLocked: true }) => Stay().Replying(StatusResponse.Failure("Account is locked")),
+        (_, BankAccountData bankAccountData) when bankAccountData.CheckLock() => GoTo(LockedState.Instance)
           .Applying(LockAccount.Instance)
           .AndThen(account =>
           {
@@ -41,11 +42,7 @@ public sealed class BankAccountActor : PersistentFSM<
               Sender.Tell(StatusResponse.Failure("Account is locked"), Self);
               SetTimer(LockTimer, UnlockAccount.Instance, TimeSpan.FromSeconds(5), false);
             }
-          });
-      }
-
-      return (evt.FsmEvent, state.StateData) switch
-      {
+          }),
         (UnlockAccount, _) => GoTo(OpenedState.Instance)
           .Applying(UnlockAccount.Instance),
         (Deposit deposit, _) => Stay()
@@ -81,20 +78,23 @@ public sealed class BankAccountActor : PersistentFSM<
               )), Self);
             }
           }),
+        (OpenAccount, _) => Stay().Replying(StatusResponse.Failure("Account is already open")),
         (CloseAccount, _) => Stay().Replying(StatusResponse.Failure("Account balance is negative")),
         (StatusRequest, BankAccountData bankAccountData) => Stay().Replying(StatusResponse.Success(
           new AccountDetail(bankAccountData.Balance, "Account status requested")
         )),
-        _ => Stay(),
+        _ => Stay().Replying(StatusResponse.Failure("Unknown command")),
       };
     });
+
+    When(LockedState.Instance, (evt, _) => Stay().Replying(StatusResponse.Failure("Account is locked")));
 
     When(ClosedState.Instance, (evt, _) => Stay().Replying(StatusResponse.Failure("Account is closed")));
   }
 
   protected override IBankAccountData ApplyEvent(IBankAccountEvent evt, IBankAccountData data)
   {
-    return evt switch {
+    var newState = evt switch {
       OpenAccount => BankAccountData.Initial,
       CloseAccount => BankAccountData.Initial,
       Deposit deposit => data switch
@@ -130,10 +130,13 @@ public sealed class BankAccountActor : PersistentFSM<
         BankAccountData bankAccountData => bankAccountData with
         {
           IsLocked = false,
+          TransactionWindow = Seq<DateTime>()
         },
         _ => data
       },
       _ => data
     };
+
+    return newState;
   }
 }
