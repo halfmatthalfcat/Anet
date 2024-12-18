@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anet.Core", "Anet.Core\Anet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anet.API", "Anet.API\Anet.API.csproj", "{22ADED3A-79E3-45B2-8FED-E167DC7FBAE6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anet.Db", "Anet.Db\Anet.Db.csproj", "{4DDFE316-7CC9-4C87-BDDB-530804E04F61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anet.Migrations", "Anet.Migrations\Anet.Migrations.csproj", "{BB849C9A-BF95-4BD7-80DF-13746FBBE6B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{22ADED3A-79E3-45B2-8FED-E167DC7FBAE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22ADED3A-79E3-45B2-8FED-E167DC7FBAE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22ADED3A-79E3-45B2-8FED-E167DC7FBAE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DDFE316-7CC9-4C87-BDDB-530804E04F61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DDFE316-7CC9-4C87-BDDB-530804E04F61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DDFE316-7CC9-4C87-BDDB-530804E04F61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DDFE316-7CC9-4C87-BDDB-530804E04F61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB849C9A-BF95-4BD7-80DF-13746FBBE6B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB849C9A-BF95-4BD7-80DF-13746FBBE6B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB849C9A-BF95-4BD7-80DF-13746FBBE6B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB849C9A-BF95-4BD7-80DF-13746FBBE6B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

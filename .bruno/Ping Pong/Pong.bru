@@ -1,0 +1,15 @@
+meta {
+  name: Pong
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:5000/api/v1/ping/pong?message=hello
+  body: none
+  auth: none
+}
+
+query {
+  message: hello
+}

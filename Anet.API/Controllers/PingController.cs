@@ -8,14 +8,14 @@ using Anet.Core.Akka.Actor;
 namespace Anet.API.Controllers;
 
 [ApiController]
-[Route("api/v1/test/[controller]")]
+[Route("api/v1/[controller]")]
 public class PingController(
   IRequiredActor<PingActor> pingActor
 ) : ControllerBase
 {
 
   [HttpGet]
-  [Route("/")]
+  [Route("")]
   [Tags("public")]
   public ActionResult Ping([FromQuery] string message)
   {

@@ -1,0 +1,32 @@
+services:
+  pg:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      ALLOW_EMPTY_PASSWORD: yes
+      POSTGRES_HOST_AUTH_METHOD: trust
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  migrations:
+    build:
+      context: .
+      dockerfile: migrations.Dockerfile
+      args:
+        RUNTIME: linux-arm64
+    depends_on:
+      pg:
+        condition: service_healthy
+    command: --connection 'Host=pg;Username=postgres'
+  # primary:
+  #   build:
+  #     context: .
+  #     dockerfile: app.Dockerfile
+  #   depends_on:
+  #     migrations:
+  #       condition: service_completed_successfully
+  #   env:
+  #     CONNECTION_STRING='Host=pg;Username=postgres'

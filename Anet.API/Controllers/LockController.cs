@@ -8,13 +8,13 @@ using Anet.Core.Akka.Actor.Locking;
 namespace Anet.API.Controllers;
 
 [ApiController]
-[Route("api/v1/test/[controller]")]
+[Route("api/v1/[controller]")]
 public class LockController(
   IRequiredActor<LockingActor> lockingActor
 ) : ControllerBase
 {
   [HttpGet]
-  [Route("lock")]
+  [Route("")]
   [Tags("public")]
   public Task<LockingActor.LockResponse> Lock() =>
     lockingActor
@@ -22,7 +22,7 @@ public class LockController(
       .Ask<LockingActor.LockResponse>(LockingActor.LockRequest.Instance);
 
   [HttpGet]
-  [Route("lock-status")]
+  [Route("status")]
   [Tags("public")]
   public Task<LockingActor.StatusResponse> LockStatus() =>
     lockingActor

@@ -1,4 +1,6 @@
 using Akka.Hosting;
+using Anet.Core.Akka.Actor.BankAccount;
+using Anet.Core.Akka.Actor.Locking;
 
 namespace Anet.Core.Akka.Actor;
 
@@ -19,6 +21,6 @@ public static class Actors
             var bankAccountProps = resolver.Props<BankAccountActor>();
             var bankAccountActor = system.ActorOf(bankAccountProps, "BankAccountActor");
             registry.Register<BankAccountActor>(bankAccountActor);
-        })
+        });
     }
 }

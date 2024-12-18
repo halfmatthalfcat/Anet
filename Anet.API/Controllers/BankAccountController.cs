@@ -8,7 +8,7 @@ using Anet.Core.Akka.Actor.BankAccount;
 namespace Anet.API.Controllers;
 
 [ApiController]
-[Route("api/v1/test/[controller]")]
+[Route("api/v1/[controller]")]
 public class BankAccountController(
   IRequiredActor<BankAccountActor> bankAccountActor
 ) : ControllerBase

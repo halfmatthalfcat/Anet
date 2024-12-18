@@ -12,9 +12,6 @@ builder.Configuration.AddEnvironmentVariables();
 
 var appConfigration = new AppConfiguration();
 
-var validation = new ValidationContext(appConfigration);
-Validator.ValidateObject(appConfigration, validation, validateAllProperties: true);
-
 builder.Services.AddOptions<AppConfiguration>();
 
 builder.Services.AddControllers();
