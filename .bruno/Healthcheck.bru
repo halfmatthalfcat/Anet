@@ -1,11 +1,11 @@
 meta {
-  name: Status
+  name: Healthcheck
   type: http
   seq: 2
 }
 
 get {
-  url: http://{{host}}/api/v1/lock/status
+  url: http://{{host}}/healthz/akka/
   body: none
   auth: none
 }

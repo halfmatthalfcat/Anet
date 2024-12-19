@@ -8,12 +8,17 @@ COPY ./Anet.API ./Anet.API
 COPY ./Anet.Core ./Anet.Core
 COPY ./Anet.Db ./Anet.Db
 
+WORKDIR /src/Anet.API
+
 RUN dotnet restore
-RUN dotnet build "Anet.API/Anet.API.csproj" -c Release -o /src/build
-RUN dotnet publish "Anet.API/Anet.API.csproj" -c Release -o /src/publish
+RUN dotnet build "Anet.API.csproj" -c Release -o /src/build
+RUN dotnet publish "Anet.API.csproj" -c Release -o /src/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 
-COPY --from=publish /src/publish .
+RUN apt-get update
+RUN apt-get install curl -y
+
+COPY --from=build /src/publish .
 ENTRYPOINT [ "dotnet", "Anet.API.dll" ]

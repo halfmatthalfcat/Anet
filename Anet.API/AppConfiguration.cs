@@ -9,6 +9,17 @@ public class AppConfiguration
   [Required]
   public string ConnectionString { get; set; } = null!;
 
+  [ConfigurationKeyName("REMOTE_PORT")]
+  [Required]
+  public int RemotePort { get; set; }
+
+  [ConfigurationKeyName("REMOTE_HOST")]
+  [Required]
+  public string RemoteHost { get; set; } = null!;
+
+  [ConfigurationKeyName("PEERS")]
+  public List<string> Peers { get; set; } = [];
+
   public AppConfiguration()
   {
     new ConfigurationBuilder()

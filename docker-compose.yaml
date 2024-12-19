@@ -21,12 +21,57 @@ services:
       pg:
         condition: service_healthy
     command: --connection 'Host=pg;Username=postgres'
-  # primary:
-  #   build:
-  #     context: .
-  #     dockerfile: app.Dockerfile
-  #   depends_on:
-  #     migrations:
-  #       condition: service_completed_successfully
-  #   env:
-  #     CONNECTION_STRING='Host=pg;Username=postgres'
+  primary:
+    build:
+      context: .
+      dockerfile: app.Dockerfile
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+    environment:
+      CONNECTION_STRING: 'Host=pg;Username=postgres'
+      REMOTE_PORT: 5001
+      REMOTE_HOST: primary
+      PEERS__0: akka.tcp://AnetSystem@primary:5001
+    ports:
+      - "8000:5000"
+      - "5001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/healthz/akka/ready/cluster"]
+      interval: 5s
+      timeout: 15s
+      retries: 5
+  peer1:
+    build:
+      context: .
+      dockerfile: app.Dockerfile
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+      primary:
+        condition: service_healthy
+    environment:
+      CONNECTION_STRING: 'Host=pg;Username=postgres'
+      REMOTE_PORT: 5002
+      REMOTE_HOST: peer1
+      PEERS__0: akka.tcp://AnetSystem@primary:5001
+    ports:
+      - "8001:5000"
+      - "5002"
+  peer2:
+    build:
+      context: .
+      dockerfile: app.Dockerfile
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+      primary:
+        condition: service_healthy
+    environment:
+      CONNECTION_STRING: 'Host=pg;Username=postgres'
+      REMOTE_PORT: 5003
+      REMOTE_HOST: peer2
+      PEERS__0: akka.tcp://AnetSystem@primary:5001
+    ports:
+      - "8002:5000"
+      - "5003"
