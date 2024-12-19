@@ -9,8 +9,14 @@ Uses:
 
 ## Running
 
+### via Docker-Compose
+
 Running via the supplied `docker-compose` is the easiest and most straightforward way to run the entire project. It will
-automatically build and start the API server, bootstrap Akka, start Postgres and apply the necessary EF migrations.
+automatically:
+* Start Postgres
+* Apply EF migrations from `Anet.Migrations`
+* Start the `primary` Anet Actor System
+* Start the peer Anet Actor Systems to form a cluster
 
 > Note, if you're running on OSX, you may need to prepend DOCKER_DEFAULT_PLATFORM=linux/arm64
 
@@ -18,7 +24,11 @@ automatically build and start the API server, bootstrap Akka, start Postgres and
 docker-compose up
 ```
 
-API available at http://localhost:5000
+API available at http://localhost:8000
+
+### via `donet` CLI
+
+You can run a single instance of Anet via the `dotnet` CLI (via `dotnet run`), however you must have Postgres running with the appropriate schema so Akka Persistence may still work. You can do this by simply upping Postgres and the EF migrations from the docker-compose by running `docker-compose up pg migrations`.
 
 ## Projects
 
@@ -29,4 +39,4 @@ API available at http://localhost:5000
 
 ## Interaction
 
-A `bruno` collection (located at `.bruno`) is included in the project that enumerates the various API endpoints, which interact with the various Actors implemented in the project.
+A [`bruno`](https://www.usebruno.com/) collection (located at `.bruno`) is included in the project that enumerates the various API endpoints, which interact with the various Actors implemented in the project.
