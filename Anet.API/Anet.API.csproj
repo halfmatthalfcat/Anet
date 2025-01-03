@@ -11,17 +11,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Using Include="LanguageExt" />
-    <Using Include="LanguageExt.Prelude" Static="True" />
-    <Using Include="System" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Akka.Cluster.Hosting" Version="1.5.32" />
     <PackageReference Include="Akka.HealthCheck.Hosting.Web" Version="1.5.31" />
     <PackageReference Include="Akka.Persistence.PostgreSql" Version="1.5.20" />
     <PackageReference Include="Akka.Persistence.PostgreSql.Hosting" Version="1.5.20" />
     <PackageReference Include="Akka.Remote.Hosting" Version="1.5.32" />
+    <PackageReference Include="LanguageExt.Core" Version="4.4.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="System" />
+    <Using Include="LanguageExt" />
+    <Using Include="LanguageExt.Prelude" Static="True" />
   </ItemGroup>
 
 </Project>

@@ -7,10 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Akka" Version="1.5.31" />
-    <PackageReference Include="Akka.DependencyInjection" Version="1.5.31" />
-    <PackageReference Include="Akka.Hosting" Version="1.5.31.1" />
-    <PackageReference Include="Akka.Persistence" Version="1.5.31" />
+    <PackageReference Include="Akka" Version="1.5.32" />
+    <PackageReference Include="Akka.Cluster.Hosting" Version="1.5.32" />
+    <PackageReference Include="Akka.Cluster.Sharding" Version="1.5.32" />
+    <PackageReference Include="Akka.DependencyInjection" Version="1.5.32" />
+    <PackageReference Include="Akka.Hosting" Version="1.5.32" />
+    <PackageReference Include="Akka.Persistence" Version="1.5.32" />
     <PackageReference Include="LanguageExt.Core" Version="4.4.9" />
   </ItemGroup>
 

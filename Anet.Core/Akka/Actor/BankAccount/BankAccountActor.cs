@@ -1,3 +1,4 @@
+using _Actor = Akka.Actor;
 using Akka.Persistence.Fsm;
 
 namespace Anet.Core.Akka.Actor.BankAccount;
@@ -5,27 +6,35 @@ namespace Anet.Core.Akka.Actor.BankAccount;
 public sealed class BankAccountActor : PersistentFSM<
   IBankAccountState, IBankAccountData, IBankAccountEvent>
 {
-  public override string PersistenceId => "BankAccount";
+  public override string PersistenceId { get; }
   private const string LockTimer = "LockTimer";
 
-  public BankAccountActor()
+  public static _Actor.Props Props(string persistenceId) =>
+    _Actor.Props.Create(() => new BankAccountActor(persistenceId));
+
+  public BankAccountActor(string persistenceId)
   {
+    PersistenceId = persistenceId;
+
     StartWith(NewState.Instance, EmptyData.Instance);
 
-    When(NewState.Instance, (evt, _) => evt.FsmEvent switch
-    {
-      OpenAccount _ => GoTo(OpenedState.Instance)
-        .Applying(OpenAccount.Instance)
-        .AndThen(account =>
-        {
-          if (account is BankAccountData bankAccountData)
+    When(NewState.Instance, (evt, _) => {
+      Console.WriteLine($"Received event: {persistenceId} {evt.FsmEvent}");
+      return evt.FsmEvent switch
+      {
+        OpenAccount _ => GoTo(OpenedState.Instance)
+          .Applying(OpenAccount.Instance)
+          .AndThen(account =>
           {
-            Sender.Tell(StatusResponse.Success(new AccountDetail(
-              bankAccountData.Balance, "Account opened"
-            )), Self);
-          }
-        }),
-      _ => Stay().Replying(StatusResponse.Failure("Account is not open")),
+            if (account is BankAccountData bankAccountData)
+            {
+              Sender.Tell(StatusResponse.Success(new AccountDetail(
+                bankAccountData.Balance, "Account opened"
+              )), Self);
+            }
+          }),
+        _ => Stay().Replying(StatusResponse.Failure("Account is not open")),
+      };
     });
 
     When(OpenedState.Instance, (evt, _) => 

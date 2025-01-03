@@ -26,10 +26,10 @@ public sealed class StatusRequest : IBankAccountEvent
 }
 
 public sealed record AccountDetail(decimal Balance, string Message);
-public sealed record StatusResponse(Either<string, AccountDetail> Response) : IBankAccountEvent
+public sealed record StatusResponse(Util.IResult<AccountDetail> Response) : IBankAccountEvent
 {
-  public static StatusResponse Success(AccountDetail balance) => new(Either<string, AccountDetail>.Right(balance));
-  public static StatusResponse Failure(string message) => new(Either<string, AccountDetail>.Left(message));
+  public static StatusResponse Success(AccountDetail balance) => new(new Util.IResult<AccountDetail>.Success(balance));
+  public static StatusResponse Failure(string message) => new(new Util.IResult<AccountDetail>.Failure(message));
 }
 
 // Internal Events

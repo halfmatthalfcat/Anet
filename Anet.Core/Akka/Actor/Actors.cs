@@ -1,4 +1,8 @@
+using Akka.Actor;
+using Akka.Cluster.Hosting;
+using Akka.Cluster.Sharding;
 using Akka.Hosting;
+using Anet.Core.Akka.Actor.Bank;
 using Anet.Core.Akka.Actor.BankAccount;
 using Anet.Core.Akka.Actor.Locking;
 
@@ -18,9 +22,16 @@ public static class Actors
             var lockActor = system.ActorOf(lockProps, "LockingActor");
             registry.Register<LockingActor>(lockActor);
 
-            var bankAccountProps = resolver.Props<BankAccountActor>();
-            var bankAccountActor = system.ActorOf(bankAccountProps, "BankAccountActor");
+            var bankAccountActor = system.ActorOf(BankAccountActor.Props("BankAccount"), "BankAccountActor");
             registry.Register<BankAccountActor>(bankAccountActor);
-        });
+        }).WithShardRegion<BankAccountShardActor>("BankAccount",
+            s => Props.Create(() => new BankAccountShardActor($"BankAccount-{s}")), 
+            new BankAccountMessageExtractor(),
+            new ShardOptions() {
+                RememberEntities = true,
+                StateStoreMode = StateStoreMode.DData,
+                PassivateIdleEntityAfter = TimeSpan.FromHours(1),
+            }
+        );
     }
 }
