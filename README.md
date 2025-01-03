@@ -40,3 +40,23 @@ You can run a single instance of Anet via the `dotnet` CLI (via `dotnet run`), h
 ## Interaction
 
 A [`bruno`](https://www.usebruno.com/) collection (located at `.bruno`) is included in the project that enumerates the various API endpoints, which interact with the various Actors implemented in the project.
+
+## Actors
+
+There are the following actors in the project for reference. They iteratively build on each other to demonstrate the different facets of the Akka ecosystem.
+
+### [Ping/Pong](https://github.com/halfmatthalfcat/Anet/blob/main/Anet.Core/Akka/Actor/Ping/PingActor.cs)
+
+A set of simple actors to model ping/ponging messages back to a user.
+
+### [Locking](https://github.com/halfmatthalfcat/Anet/blob/main/Anet.Core/Akka/Actor/Locking/LockingActor.cs)
+
+Demonstrating Akka Actor internal timers and managing internal state via FSM (Finite State Machine).
+
+### [Bank Account](https://github.com/halfmatthalfcat/Anet/blob/main/Anet.Core/Akka/Actor/BankAccount/BankAccountActor.cs)
+
+Demonstrating Akka Actor persistence via Postgres.
+
+### [Bank](https://github.com/halfmatthalfcat/Anet/blob/main/Anet.Core/Akka/Actor/Bank/BankAccountShardActor.cs)
+
+Demonstrating Akka Actor Cluster Sharding across a 3 node cluster.
