@@ -3,7 +3,7 @@
 Uses:
 
 - .NET 8
-- [Akka.NET](https://getakka.net/articles/intro/what-is-akka.html) (Core, Hosting, DI)
+- [Akka.NET](https://getakka.net/articles/intro/what-is-akka.html) (Core, Hosting, DI, Remote, Cluster, Persistence)
 - [LanguageExt](https://github.com/louthy/language-ext) (Functional C# Utilities)
 - [ASP.NET](https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-8.0&tabs=visual-studio)
 
